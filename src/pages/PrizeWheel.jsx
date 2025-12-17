@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
+import { useParams } from 'react-router-dom'
 import api from '../services/api';
 
 export default function PrizeWheel() {
@@ -9,11 +10,12 @@ export default function PrizeWheel() {
     const [campaign, setCampaign] = useState(null);
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState(null);
+    const { campaignName } = useParams();
 
     useEffect(() => {
         const fetchWheelData = async () => {
             try {
-                const response = await api.get('/v1/prize-wheel/rolada-da-sorte');
+                const response = await api.get(`/v1/prize-wheel/${campaignName}`);
                 const { campaign, items } = response.data;
 
                 setCampaign(campaign);
@@ -34,13 +36,13 @@ export default function PrizeWheel() {
         };
 
         fetchWheelData();
-    }, []);
+    }, [campaignName]);
 
     const handleSpinClick = async () => {
         if (mustSpin) return;
 
         try {
-            const response = await api.get('/v1/prize-wheel/spin/rolada-da-sorte');
+            const response = await api.get(`/v1/prize-wheel/spin/${campaignName}`);
             const spinResult = response.data;
 
             console.log('spinResult', spinResult)

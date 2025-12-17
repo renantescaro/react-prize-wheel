@@ -9,7 +9,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
-				<Route path="/wheel" element={<PrizeWheel />} />
+				<Route path="/wheel/:campaignName" element={<PrizeWheel />} />
 				<Route path="/register" element={<div>Página de Cadastro (Em breve)</div>} />
 			</Routes>
 		</Router>
