@@ -8,6 +8,7 @@ export default function PrizeWheel() {
     const [wheelData, setWheelData] = useState([]);
     const [campaign, setCampaign] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState(null);
 
     useEffect(() => {
         const fetchWheelData = async () => {
@@ -20,7 +21,8 @@ export default function PrizeWheel() {
                 const formattedData = items.map((item) => ({
                     option: item.title,
                     style: { backgroundColor: `#${item.color}`, textColor: 'white' },
-                    ...item
+                    id_original: item.id,
+                    description: item.description
                 }));
 
                 setWheelData(formattedData);
@@ -34,11 +36,31 @@ export default function PrizeWheel() {
         fetchWheelData();
     }, []);
 
-    const handleSpinClick = () => {
-        if (!mustSpin) {
-            const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
-            setPrizeNumber(newPrizeNumber);
-            setMustSpin(true);
+    const handleSpinClick = async () => {
+        if (mustSpin) return;
+
+        try {
+            const response = await api.get('/v1/prize-wheel/spin/rolada-da-sorte');
+            const spinResult = response.data;
+
+            console.log('spinResult', spinResult)
+            console.log('wheelData', wheelData)
+
+            const indexFound = wheelData.findIndex(
+                item => item.id_original === spinResult.campaign_item_winner_id
+            );
+            console.log("indexFound", indexFound)
+
+            if (indexFound !== -1) {
+                setResult(spinResult);
+                setPrizeNumber(indexFound);
+                setMustSpin(true);
+            } else {
+                alert("Erro ao sincronizar prêmio.");
+            }
+        } catch (err) {
+            alert("Erro ao girar a roleta. Verifique se você tem saldo ou permissão.");
+            console.error(err);
         }
     };
 
@@ -59,18 +81,18 @@ export default function PrizeWheel() {
                                 data={wheelData}
                                 onStopSpinning={() => {
                                     setMustSpin(false);
-                                    alert(`Parabéns! Você ganhou: ${wheelData[prizeNumber].description}`);
+                                    alert(`Resultado: ${result?.prize_details}`);
                                 }}
                             />
                         )}
                     </div>
 
                     <button
-                        className="btn btn-success btn-lg px-5"
+                        className="btn btn-success btn-lg px-5 shadow"
                         onClick={handleSpinClick}
                         disabled={mustSpin}
                     >
-                        {mustSpin ? 'Girando...' : 'GIRAR!'}
+                        {mustSpin ? 'Sorteando...' : 'GIRAR AGORA!'}
                     </button>
                 </div>
             </div>
