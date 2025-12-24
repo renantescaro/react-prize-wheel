@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import AdminNavbar from '../components/AdminNavbar';
+import DataTable from '../components/DataTable';
 
 export default function AdminTransactions() {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const columns = [
+        { label: 'ID' },
+        { label: 'Data/Hora' },
+        { label: 'Cliente' },
+        { label: 'Tipo' },
+        { label: 'Valor', className: 'text-end' }
+    ];
 
     useEffect(() => {
         fetchTransactions();
@@ -35,57 +44,33 @@ export default function AdminTransactions() {
             <AdminNavbar />
             <div className="container">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Movimentações Financeiras</h2>
+                    <h2>Transações Financeiras</h2>
                 </div>
 
-                <div className="card shadow-sm">
-                    <div className="card-body p-0">
-                        <div className="table-responsive">
-                            <table className="table table-hover mb-0">
-                                <thead className="table-light">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Data/Hora</th>
-                                        <th>Cliente</th>
-                                        <th>Tipo</th>
-                                        <th className="text-end">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loading ? (
-                                        <tr><td
-                                            colSpan="5"
-                                            className="text-center py-4">
-                                            Carregando transações...</td>
-                                        </tr>
-                                    ) : transactions.map((t) => {
-                                        const typeInfo = formatType(t.transaction_type);
-                                        return (
-                                            <tr key={t.id}>
-                                                <td><small className="text-muted">#{t.id}</small></td>
-                                                <td>{new Date(t.creation_time).toLocaleString('pt-BR')}</td>
-                                                <td>Client #{t.client_id}</td>
-                                                <td className={typeInfo.class}>{typeInfo.label}</td>
-                                                <td className={`text-end fw-bold ${t.value < 0 ? 'text-danger' : 'text-success'}`}>
-                                                    {t.value < 0 ? '-' : '+'} R$ {
-                                                        Math.abs(t.value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-                                                    }
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                    {!loading && transactions.length === 0 && (
-                                        <tr><td
-                                            colSpan="5"
-                                            className="text-center py-4">
-                                            Nenhuma transação encontrada.</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <DataTable
+                    headers={columns}
+                    data={transactions}
+                    loading={loading}
+                    renderRow={(t) => {
+                        const typeInfo = formatType(t.transaction_type);
+                        const isNegative = t.value < 0;
+                        return (
+                            <>
+                                <td>{t.id}</td>
+                                <td>{new Date(t.creation_time).toLocaleString('pt-BR')}</td>
+                                <td>
+                                    <span className="badge bg-light text-dark border">
+                                        Client #{t.client_id}
+                                    </span>
+                                </td>
+                                <td className={typeInfo.class}>{typeInfo.label}</td>
+                                <td className={`text-end fw-bold ${isNegative ? 'text-danger' : 'text-success'}`}>
+                                    {isNegative ? '-' : '+'} R$ {Math.abs(t.value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                </td>
+                            </>
+                        );
+                    }}
+                />
             </div>
         </>
     );
