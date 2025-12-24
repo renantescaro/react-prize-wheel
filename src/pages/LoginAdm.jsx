@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
-export default function Login() {
+export default function LoginAdm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -15,19 +15,18 @@ export default function Login() {
         const payload = {
             client_login: email,
             client_secret: password,
-            kind: "client"
+            kind: "user"
         };
 
         try {
             const response = await api.post('/v1/auth', payload);
 
-            const token = response.data.token;
-            localStorage.setItem('token', token);
-            localStorage.setItem('isAdmin', 'false');
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('isAdmin', 'true');
 
-            navigate('/');
+            navigate('/admin/home');
         } catch (err) {
-            alert('Erro ao realizar login. Verifique suas credenciais.');
+            alert('Erro no acesso administrativo. Verifique suas credenciais.');
             console.error(err);
         } finally {
             setLoading(false);
@@ -38,12 +37,12 @@ export default function Login() {
         <div className="container mt-5">
             <div className="row justify-content-center">
                 <div className="col-md-4">
-                    <div className="card shadow">
+                    <div className="card border-danger shadow">
                         <div className="card-body">
-                            <h3 className="card-title text-center mb-4">Login</h3>
+                            <h3 className="card-title text-center mb-4 text-danger">Painel Admin</h3>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label className="form-label">E-mail</label>
+                                    <label className="form-label">E-mail Admin</label>
                                     <input
                                         type="email"
                                         className="form-control"
@@ -64,10 +63,10 @@ export default function Login() {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="btn btn-primary w-100"
+                                    className="btn btn-danger w-100"
                                     disabled={loading}
                                 >
-                                    {loading ? 'Entrando...' : 'Entrar'}
+                                    {loading ? 'Autenticando...' : 'Acessar Sistema'}
                                 </button>
                             </form>
                         </div>

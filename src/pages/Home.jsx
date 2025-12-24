@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../services/api'
+import Header from '../components/Header';
+import api from '../services/api';
 
 export default function Home() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,21 +26,13 @@ export default function Home() {
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        setCampaigns([]);
-        navigate('/');
-    };
-
     return (
-        <div className="container mt-5">
+        <div>
             <div className="row justify-content-center text-center">
                 <div className="col-md-10">
-                    <h1 className="display-4 mb-4">Bem-vindo à nossa App</h1>
-
                     {!isLoggedIn ? (
                         <div className="py-5">
+                            <h1 className="display-4 mb-4">Bem-vindo à nossa App</h1>
                             <p className="lead mb-4">Esta é a página pública inicial. Faça login para ver as campanhas.</p>
                             <div className="d-flex justify-content-center gap-3">
                                 <Link to="/login" className="btn btn-primary btn-lg px-5">Entrar</Link>
@@ -48,12 +41,10 @@ export default function Home() {
                         </div>
                     ) : (
                         <div>
-                            <div className="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
-                                <p className="lead mb-0">Campanhas Ativas</p>
-                                <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">Sair (Logout)</button>
-                            </div>
+                            <Header />
 
                             <div className="row g-4 text-start">
+                                <p className="lead mb-0">Campanhas Ativas</p>
                                 {campaigns.map((camp) => (
                                     <div key={camp.id} className="col-md-4">
                                         <div className="card h-100 shadow-sm">

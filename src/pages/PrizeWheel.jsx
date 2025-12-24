@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import { useParams } from 'react-router-dom'
+import Header from '../components/Header';
 import api from '../services/api';
 
 export default function PrizeWheel() {
@@ -45,13 +46,9 @@ export default function PrizeWheel() {
             const response = await api.get(`/v1/prize-wheel/spin/${campaignName}`);
             const spinResult = response.data;
 
-            console.log('spinResult', spinResult)
-            console.log('wheelData', wheelData)
-
             const indexFound = wheelData.findIndex(
                 item => item.id_original === spinResult.campaign_item_winner_id
             );
-            console.log("indexFound", indexFound)
 
             if (indexFound !== -1) {
                 setResult(spinResult);
@@ -70,6 +67,7 @@ export default function PrizeWheel() {
 
     return (
         <div className="container mt-5 text-center">
+            <Header />
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <h1 className="mb-2">{campaign?.title}</h1>
@@ -83,6 +81,7 @@ export default function PrizeWheel() {
                                 data={wheelData}
                                 onStopSpinning={() => {
                                     setMustSpin(false);
+                                    window.dispatchEvent(new Event('updateBalance'));
                                     alert(`Resultado: ${result?.prize_details}`);
                                 }}
                             />
