@@ -12,6 +12,7 @@ export default function AdminUsers() {
     const columns = [
         { label: 'ID' },
         { label: 'Nome' },
+        { label: 'Login' },
         { label: 'Data Criação' },
         { label: 'Status' },
         { label: 'Ações', className: 'text-end' }
@@ -51,6 +52,7 @@ export default function AdminUsers() {
                         <>
                             <td>{user.id}</td>
                             <td><strong>{user.name}</strong></td>
+                            <td><strong>{user.login}</strong></td>
                             <td>{new Date(user.creation_date).toLocaleDateString()}</td>
                             <td>
                                 <span className={`badge bg-${user.is_active ? 'success' : 'secondary'}`}>
