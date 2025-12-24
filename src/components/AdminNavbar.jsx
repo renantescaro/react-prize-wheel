@@ -33,8 +33,35 @@ export default function AdminNavbar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin/users">Usuários</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/admin/reports">Relatórios</Link>
+                        <li className="nav-item dropdown">
+                            <a
+                                className="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Relatórios
+                            </a>
+                            <ul
+                                className="dropdown-menu shadow"
+                                aria-labelledby="navbarDropdown">
+                                <li>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/admin/spins">Log de Giros
+                                    </Link>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/admin/transactions">Transações
+                                    </Link>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/admin/clients">Clientes
+                                    </Link>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
 
