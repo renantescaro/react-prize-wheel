@@ -9,6 +9,8 @@ import AdminUsers from './pages/AdminUsers';
 import AdminSpins from './pages/AdminSpins';
 import AdminTransactions from './pages/AdminTransactions';
 import AdminClient from './pages/AdminClient';
+import AdminCampaignForm from './pages/AdminCampaignForm';
+import AdminUserForm from './pages/AdminUserForm';
 
 function App() {
 	return (
@@ -21,6 +23,10 @@ function App() {
 
 				<Route path="/admin/login" element={<LoginAdm />} />
 				<Route path="/admin/campaigns" element={<AdminCampaigns />} />
+				<Route path="/admin/campaigns/new" element={<AdminCampaignForm />} />
+				<Route path="/admin/campaigns/edit/:id" element={<AdminCampaignForm />} />
+				<Route path="/admin/users/new" element={<AdminUserForm />} />
+				<Route path="/admin/users/edit/:id" element={<AdminUserForm />} />
 				<Route path="/admin/clients" element={<AdminClient />} />
 				<Route path="/admin/users" element={<AdminUsers />} />
 				<Route path="/admin/spins" element={<AdminSpins />} />
