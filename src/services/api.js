@@ -22,7 +22,14 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('token');
+
+            const isAdmin = localStorage.getItem('isAdmin');
+            if (isAdmin == 'true') {
+                window.location.href = '/admin/login';
+                return;
+            }
             window.location.href = '/login';
+            return;
         }
         return Promise.reject(error);
     }
