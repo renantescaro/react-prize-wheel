@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 import AdminNavbar from '../components/AdminNavbar';
 import DataTable from '../components/DataTable';
@@ -47,14 +48,16 @@ export default function AdminSpins() {
                         <>
                             <td>{spin.id}</td>
                             <td>
-                                <span className="badge bg-light text-dark border">
-                                    Client #{spin.client_id}
-                                </span>
+                                <Link
+                                    to={`/admin/clients/view/${spin.client_id}`}
+                                    className="badge bg-light text-dark border"
+                                >Client #{spin.client_id}</Link>
                             </td>
                             <td>
-                                <span className="badge bg-secondary">
-                                    Camp. #{spin.campaign_id}
-                                </span>
+                                <Link
+                                    to={`/admin/campaigns/edit/${spin.campaign_id}`} 
+                                    className="badge bg-secondary"
+                                >Camp. #{spin.campaign_id}</Link>
                             </td>
                             <td className="fw-bold text-success">
                                 R$ {spin.result_value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
