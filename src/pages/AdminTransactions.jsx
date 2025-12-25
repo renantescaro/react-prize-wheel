@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 import AdminNavbar from '../components/AdminNavbar';
 import DataTable from '../components/DataTable';
+import { Link } from 'react-router-dom';
 
 export default function AdminTransactions() {
     const [transactions, setTransactions] = useState([]);
@@ -59,9 +60,10 @@ export default function AdminTransactions() {
                                 <td>{t.id}</td>
                                 <td>{new Date(t.creation_time).toLocaleString('pt-BR')}</td>
                                 <td>
-                                    <span className="badge bg-light text-dark border">
-                                        Client #{t.client_id}
-                                    </span>
+                                    <Link
+                                        to={`/admin/clients/view/${t.client_id}`}
+                                        className="badge bg-light text-dark border"
+                                    >Client #{t.client_id}</Link>
                                 </td>
                                 <td className={typeInfo.class}>{typeInfo.label}</td>
                                 <td className={`text-end fw-bold ${isNegative ? 'text-danger' : 'text-success'}`}>

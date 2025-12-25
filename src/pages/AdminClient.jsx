@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 import AdminNavbar from '../components/AdminNavbar';
 import DataTable from '../components/DataTable';
+import { Link } from 'react-router-dom';
 
 export default function AdminClient() {
     const [clients, setClients] = useState([]);
@@ -59,9 +60,10 @@ export default function AdminClient() {
                                 )}
                             </td>
                             <td className="text-end">
-                                <button className="btn btn-sm btn-outline-primary me-2">
-                                    Detalhes
-                                </button>
+                                <Link
+                                    to={`/admin/clients/view/${client.id}`}
+                                    className="btn btn-sm btn-outline-primary me-2"
+                                >Detalhes</Link>
                                 <button className={`btn btn-sm ${client.is_active ? 'btn-outline-danger' : 'btn-outline-success'}`}>
                                     {client.is_active ? 'Bloquear' : 'Ativar'}
                                 </button>
