@@ -21,7 +21,7 @@ export default function AdminClientView() {
     });
 
     useEffect(() => {
-            fetchClient();
+        fetchClient();
     }, []);
 
     const fetchClient = async () => {
