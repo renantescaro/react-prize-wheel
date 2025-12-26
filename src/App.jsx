@@ -13,6 +13,7 @@ import AdminCampaignForm from './pages/AdminCampaignForm';
 import AdminUserForm from './pages/AdminUserForm';
 import AdminClientView from './pages/AdminClientView';
 import Register from './pages/Register';
+import AdminCampaignItems from './pages/AdminCampaignItems';
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 				<Route path="/register" element={<Register/>} />
 
 				<Route path="/admin/login" element={<LoginAdm />} />
+				<Route path="/admin/campaigns/:campaignId/items" element={<AdminCampaignItems />} />
 				<Route path="/admin/campaigns" element={<AdminCampaigns />} />
 				<Route path="/admin/campaigns/new" element={<AdminCampaignForm />} />
 				<Route path="/admin/campaigns/edit/:id" element={<AdminCampaignForm />} />
