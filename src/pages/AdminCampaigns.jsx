@@ -66,6 +66,12 @@ export default function AdminCampaigns() {
                             <td className="fw-bold">R$ {camp.spin_price.toFixed(2)}</td>
                             <td>{new Date(camp.end_date).toLocaleDateString('pt-BR')}</td>
                             <td className="text-end">
+                                <Link 
+                                    to={`/admin/campaigns/${camp.id}/items`} 
+                                    className="btn btn-sm btn-outline-warning me-2"
+                                >
+                                    Items/Prêmios
+                                </Link>
                                 <Link
                                     to={`/admin/campaigns/edit/${camp.id}`}
                                     className="btn btn-sm btn-outline-primary me-2"
