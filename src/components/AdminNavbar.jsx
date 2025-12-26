@@ -1,7 +1,31 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import api from '../services/api';
 
 export default function AdminNavbar() {
     const navigate = useNavigate();
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    const fetchUser = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const isAdmin = localStorage.getItem('isAdmin');
+
+            if (!token || isAdmin == 'false'){
+                navigate('/admin/login');
+                return;
+            }
+
+            const response = await api.get(`/v1/test-user`);
+            const data = response.data;
+        } catch (err) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('isAdmin');
+            navigate('/admin/login');
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('token');

@@ -58,7 +58,7 @@ export default function PrizeWheel() {
                 alert("Erro ao sincronizar prêmio.");
             }
         } catch (err) {
-            alert("Erro ao girar a roleta. Verifique se você tem saldo ou permissão.");
+            alert("Erro ao girar a roleta. Verifique se você tem saldo.");
             console.error(err);
         }
     };

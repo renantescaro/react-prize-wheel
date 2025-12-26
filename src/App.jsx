@@ -12,6 +12,7 @@ import AdminClient from './pages/AdminClient';
 import AdminCampaignForm from './pages/AdminCampaignForm';
 import AdminUserForm from './pages/AdminUserForm';
 import AdminClientView from './pages/AdminClientView';
+import Register from './pages/Register';
 
 function App() {
 	return (
@@ -20,7 +21,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/wheel/:campaignName" element={<PrizeWheel />} />
-				<Route path="/register" element={<div>Página de Cadastro (Em breve)</div>} />
+				<Route path="/register" element={<Register/>} />
 
 				<Route path="/admin/login" element={<LoginAdm />} />
 				<Route path="/admin/campaigns" element={<AdminCampaigns />} />
