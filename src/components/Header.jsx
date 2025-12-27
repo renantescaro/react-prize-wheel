@@ -46,6 +46,13 @@ export default function Header() {
                             R$ {balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </span>
                     </div>
+                    <div className="d-flex align-items-center">
+                        <Link
+                            to={`/buy-coins`}
+                            className="btn btn-primary btn-sm text-uppercase x-small fw-bold">
+                            Comprar Moedas
+                        </Link>
+                    </div>
 
                     <div className="border-start ps-3">
                         <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">

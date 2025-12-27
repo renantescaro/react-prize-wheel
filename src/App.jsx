@@ -14,6 +14,7 @@ import AdminUserForm from './pages/AdminUserForm';
 import AdminClientView from './pages/AdminClientView';
 import Register from './pages/Register';
 import AdminCampaignItems from './pages/AdminCampaignItems';
+import BuyCoins from './pages/BuyCoins';
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/wheel/:campaignName" element={<PrizeWheel />} />
 				<Route path="/register" element={<Register/>} />
+				<Route path="/buy-coins" element={<BuyCoins/>} />
 
 				<Route path="/admin/login" element={<LoginAdm />} />
 				<Route path="/admin/campaigns/:campaignId/items" element={<AdminCampaignItems />} />
