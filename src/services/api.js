@@ -25,8 +25,6 @@ api.interceptors.response.use(
             localStorage.removeItem('isAdmin');
 
             const isAdmin = window.location.href.includes("admin")
-            console.log("url",window.location.href)
-            console.log("isAdmin",isAdmin)
 
             if (isAdmin) {
                 window.location.href = '/admin/login';

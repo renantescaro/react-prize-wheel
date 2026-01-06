@@ -10,7 +10,9 @@ export default function Home() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token);
+        const isAdmin = localStorage.getItem('isAdmin');
+
+        setIsLoggedIn(!!token && isAdmin == 'false');
 
         if (token) {
             fetchCampaigns();
